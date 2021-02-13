@@ -8,7 +8,7 @@ from grocery_app.models import ItemCategory, GroceryStore, GroceryItem
 class GroceryStoreForm(FlaskForm):
     """Form for adding/updating a GroceryStore."""
 
-    # TODO: Add the following fields to the form class:
+    # Add the following fields to the form class:
     # - title - StringField
     # - address - StringField
     # - submit button
@@ -19,7 +19,7 @@ class GroceryStoreForm(FlaskForm):
 class GroceryItemForm(FlaskForm):
     """Form for adding/updating a GroceryItem."""
 
-    # TODO: Add the following fields to the form class:
+    # Add the following fields to the form class:
     # - name - StringField
     # - price - FloatField
     # - category - SelectField (specify the 'choices' param)
