@@ -14,7 +14,7 @@
 
 <h2>Edit Item</h2>
 
-<form method="POST" action="{{ url_for('main.item_detail') }}">
+<form method="POST" action="{{ url_for('main.item_detail', item_id=item.id) }}">
 
     {{ form.csrf_token }}
 
