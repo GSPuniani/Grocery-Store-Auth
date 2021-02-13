@@ -19,6 +19,13 @@ class GroceryStore(db.Model):
     address = db.Column(db.String(200), nullable=False)
     items = db.relationship('GroceryItem', back_populates='store')
 
+    # Include string representations for the drop-down menu
+    def __str__(self):
+        return f'<Grocery Store: {self.title}>'
+
+    def __repr__(self):
+        return f'<Grocery Store: {self.title}>'
+
 class GroceryItem(db.Model):
     """Grocery Item model."""
     id = db.Column(db.Integer, primary_key=True)

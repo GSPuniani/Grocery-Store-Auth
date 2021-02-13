@@ -33,13 +33,23 @@
             from the route to render a form. -->
             {{ form.title.label }}
             {{ form.title }}
+            <ul>
+                {% for error in form.title.errors %}
+                <li class="error">{{ error }}</li>
+                {% endfor %}
+            </ul>
             
             {{ form.address.label }}
             {{ form.address}}
+            <ul>
+                {% for error in form.address.errors %}
+                <li class="error">{{ error }}</li>
+                {% endfor %}
+            </ul>
                 
             {{ form.submit }}
 
-        <input type="submit" value="Submit">
+        <!-- <input type="submit" value="Submit"> -->
     </fieldset>
 </form>
 
