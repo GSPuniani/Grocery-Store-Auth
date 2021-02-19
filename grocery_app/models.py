@@ -43,6 +43,7 @@ class GroceryItem(db.Model):
     created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     created_by = db.relationship('User')
 
+# Create a User model with id, username, and password fields
 class User(db.Model):
     """User model."""
     id = db.Column(db.Integer, primary_key=True)
