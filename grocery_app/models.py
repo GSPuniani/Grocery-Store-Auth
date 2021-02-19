@@ -1,5 +1,5 @@
 from sqlalchemy_utils import URLType
-
+from flask_login import UserMixin
 from grocery_app import db
 from grocery_app.utils import FormEnum
 
@@ -44,7 +44,7 @@ class GroceryItem(db.Model):
     created_by = db.relationship('User')
 
 # Create a User model with id, username, and password fields
-class User(db.Model):
+class User(UserMixin, db.Model):
     """User model."""
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), nullable=False, unique=True)
