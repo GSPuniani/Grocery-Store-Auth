@@ -34,9 +34,12 @@ def load_user(user_id):
 # Initialize an instance of flask_bcrypt.Bcrypt with the app
 bcrypt = Bcrypt(app)
 
-from grocery_app.routes import main
+from grocery_app.routes import main, auth
 
 app.register_blueprint(main)
+
+# Register new blueprint for auth routes
+app.register_blueprint(auth)
 
 with app.app_context():
     db.create_all()
