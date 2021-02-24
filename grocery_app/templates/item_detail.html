@@ -11,16 +11,16 @@
 
 <p><strong>Store:</strong> {{ item.store.title }}</p>
 
-<p><em>Created by:</em> {{ store.created_by }}</p>
+<p><em>Created by:</em> {{ item.created_by }}</p>
 
-<form method="POST" action="/add_to_shopping_list/{{item.id}}">
+<form method="POST" action="/add_to_shopping_list/{{ item.id }}">
     <label>Add this item to My Shopping List</label>
-    <input type="submit" value="Submit">
+    <input type="submit" value="Add">
 </form>
 
-<form method="POST" action="/remove_from_shopping_list/{{item.id}}">
+<form method="POST" action="/remove_from_shopping_list/{{ item.id }}">
     <label>Remove this item from My Shopping List</label>
-    <input type="submit" value="Submit">
+    <input type="submit" value="Remove">
 </form>
 
 

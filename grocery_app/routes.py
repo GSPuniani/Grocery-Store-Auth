@@ -128,7 +128,6 @@ def item_detail(item_id):
 
 # Route for button that adds item to current_user's shopping list
 @main.route('/add_to_shopping_list/<item_id>', methods=['POST'])
-@login_required
 def add_to_shopping_list(item_id):
     # Get item using its id
     item = GroceryItem.query.get(item_id)
@@ -148,7 +147,6 @@ def add_to_shopping_list(item_id):
 
 # Route for button that removes item from current_user's shopping list
 @main.route('/remove_from_shopping_list/<item_id>', methods=['POST'])
-@login_required
 def remove_from_shopping_list(item_id):
     # Get item using its id
     item = GroceryItem.query.get(item_id)
