@@ -42,6 +42,9 @@ class GroceryItem(db.Model):
     # Add created_by field to see the user who added the item
     created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     created_by = db.relationship('User')
+    # Add many-to-many relationship between User and GroceryItem
+    users_who_shopped = db.relationship(
+        'User', secondary='shopping_list', back_populates='shopping_list_items')
 
 # Create a User model with id, username, and password fields
 class User(UserMixin, db.Model):
@@ -49,7 +52,16 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), nullable=False, unique=True)
     password = db.Column(db.String(200), nullable=False)
+    # Add many-to-many relationship between User and GroceryItem
+    shopping_list_items = db.relationship(
+        'GroceryItem', secondary='shopping_list', back_populates='users_who_shopped')
 
     # Display username for created_by credits
     def __repr__(self):
         return f'<User: {self.username}>'
+
+
+shopping_list_table = db.Table('shopping_list',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('item_id', db.Integer, db.ForeignKey('grocery_item.id'))
+)

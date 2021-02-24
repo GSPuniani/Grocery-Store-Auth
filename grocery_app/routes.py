@@ -126,6 +126,56 @@ def item_detail(item_id):
     item = GroceryItem.query.get(item_id)
     return render_template('item_detail.html', item=item, form=form)
 
+# Route for button that adds item to current_user's shopping list
+@main.route('/add_to_shopping_list/<item_id>', methods=['POST'])
+def add_to_shopping_list(item_id):
+    # Get item using its id
+    item = GroceryItem.query.get(item_id)
+
+    # Inform user if item is already in shopping list
+    if item in current_user.shopping_list_items:
+        flash('The grocery item is already in your shopping list.')
+    # Otherwise, add item to shopping list, update database, and display success message to user
+    else:
+        current_user.shopping_list_items.append(item)
+
+        db.session.add(current_user)
+        db.session.commit()
+        flash('The grocery item was added to your shopping list successfully.')
+
+    return redirect(url_for('main.item_detail', item_id=item_id))
+
+# Route for button that removes item from current_user's shopping list
+@main.route('/remove_from_shopping_list/<item_id>', methods=['POST'])
+def remove_from_shopping_list(item_id):
+    # Get item using its id
+    item = GroceryItem.query.get(item_id)
+
+    # Inform user if item is already not in shopping list
+    if item not in current_user.shopping_list_items:
+        flash('The grocery item was not in your shopping list.')
+    # Otherwise, add item to shopping list, update database, and display success message to user
+    else:
+        current_user.shopping_list_items.remove(item)
+
+        db.session.add(current_user)
+        db.session.commit()
+        flash('The grocery item was removed from your shopping list successfully.')
+
+    return redirect(url_for('main.item_detail', item_id=item_id))
+
+# Route for users to see items in their shopping list
+@main.route('/shopping_list')
+@login_required
+def shopping_list():
+    # Get logged in user's shopping list items
+    user_shopping_items = current_user.shopping_list_items
+    # Display shopping list items in a template
+    return render_template('shopping_list.html', user_shopping_items=user_shopping_items)
+
+
+
+
 
 
 ###########################
