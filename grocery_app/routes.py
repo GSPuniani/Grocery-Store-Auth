@@ -16,6 +16,7 @@ main = Blueprint("main", __name__)
 
 @main.route('/')
 def homepage():
+    """Display all grocery stores."""
     all_stores = GroceryStore.query.all()
     print(all_stores)
     return render_template('home.html', all_stores=all_stores)
@@ -23,6 +24,7 @@ def homepage():
 @main.route('/new_store', methods=['GET', 'POST'])
 @login_required
 def new_store():
+    """Add a new grocery store."""
     # Create a GroceryStoreForm
     form = GroceryStoreForm()
 
@@ -48,6 +50,7 @@ def new_store():
 @main.route('/new_item', methods=['GET', 'POST'])
 @login_required
 def new_item():
+    """Add a new grocery store."""
     # Create a GroceryItemForm
     form = GroceryItemForm()
 
@@ -76,6 +79,7 @@ def new_item():
 @main.route('/store/<store_id>', methods=['GET', 'POST'])
 @login_required
 def store_detail(store_id):
+    """Display grocery store details with update form below."""
     store = GroceryStore.query.get(store_id)
     # TCreate a GroceryStoreForm and pass in `obj=store`
     form = GroceryStoreForm(obj=store)
@@ -101,6 +105,7 @@ def store_detail(store_id):
 @main.route('/item/<item_id>', methods=['GET', 'POST'])
 @login_required
 def item_detail(item_id):
+    """Display grocery item details with update form below."""
     item = GroceryItem.query.get(item_id)
     # Create a GroceryItemForm and pass in `obj=item`
     form = GroceryItemForm(obj=item)
@@ -126,9 +131,10 @@ def item_detail(item_id):
     item = GroceryItem.query.get(item_id)
     return render_template('item_detail.html', item=item, form=form)
 
-# Route for button that adds item to current_user's shopping list
+
 @main.route('/add_to_shopping_list/<item_id>', methods=['POST'])
 def add_to_shopping_list(item_id):
+    """Route for button that adds item to current_user's shopping list."""
     # Get item using its id
     item = GroceryItem.query.get(item_id)
 
@@ -145,9 +151,10 @@ def add_to_shopping_list(item_id):
 
     return redirect(url_for('main.item_detail', item_id=item_id))
 
-# Route for button that removes item from current_user's shopping list
+
 @main.route('/remove_from_shopping_list/<item_id>', methods=['POST'])
 def remove_from_shopping_list(item_id):
+    """Route for button that removes item from current_user's shopping list."""
     # Get item using its id
     item = GroceryItem.query.get(item_id)
 
@@ -164,10 +171,11 @@ def remove_from_shopping_list(item_id):
 
     return redirect(url_for('main.item_detail', item_id=item_id))
 
-# Route for users to see items in their shopping list
+
 @main.route('/shopping_list')
 @login_required
 def shopping_list():
+    """Route for users to see items in their shopping list."""
     # Get logged in user's shopping list items
     user_shopping_items = current_user.shopping_list_items
     # Display shopping list items in a template
@@ -186,6 +194,7 @@ auth = Blueprint("auth", __name__)
 
 @auth.route('/signup', methods=['GET', 'POST'])
 def signup():
+    """Sign up a user with a new account."""
     print('in signup')
     form = SignUpForm()
     if form.validate_on_submit():
@@ -205,6 +214,7 @@ def signup():
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
+    """Log in a user with an existing account."""
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
@@ -217,5 +227,6 @@ def login():
 @auth.route('/logout')
 @login_required
 def logout():
+    """Log user out of the account."""
     logout_user()
     return redirect(url_for('main.homepage'))
